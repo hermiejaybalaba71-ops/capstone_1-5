@@ -293,7 +293,7 @@ export default function RegisterPage() {
         Home
       </Link>
 
-      <aside className="relative hidden w-[40%] flex-col justify-between overflow-hidden bg-gradient-to-br from-[#7B1113] via-[#5A0C0E] to-[#3E0009] p-12 text-white xl:flex 2xl:p-16">
+      <aside className="sticky top-0 hidden h-screen w-[40%] flex-col justify-between overflow-hidden bg-gradient-to-br from-[#7B1113] via-[#5A0C0E] to-[#3E0009] p-12 text-white xl:flex 2xl:p-16">
         <div className="pointer-events-none absolute -right-24 -top-24 h-80 w-80 rounded-full bg-white/[0.06]" />
         <div className="pointer-events-none absolute -bottom-36 -left-20 h-96 w-96 rounded-full bg-black/20" />
         <Link href="/" className="relative flex items-center gap-3">
