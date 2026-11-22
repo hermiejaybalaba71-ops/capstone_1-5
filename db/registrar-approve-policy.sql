@@ -3,11 +3,17 @@
 --
 -- Schema + Row Level Security for the SIMULATED Registrar Information System.
 --
--- Run this in the Supabase SQL Editor of the project the app points at:
---   1. the dedicated registrar project (NEXT_PUBLIC_REGISTRAR_SUPABASE_URL)
---      when it is reachable, otherwise
---   2. the MAIN project (NEXT_PUBLIC_SUPABASE_URL) -- the app falls back here
---      automatically via resolveRegistrarClient() / queryRegistrar().
+-- Run this ONLY in the Supabase SQL Editor of the DEDICATED REGISTRAR
+-- project (NEXT_PUBLIC_REGISTRAR_SUPABASE_URL, project ref zcnqxuydwagecdvitdva
+-- "simulated registrar information system").
+--
+-- *** Do NOT run it in the MAIN project. ***
+-- The registrar_* tables must live ONLY in the registrar project so the
+-- simulated registrar stays a separate database from the real one. The main
+-- project must contain no registrar_* table at all.
+--
+-- The app reaches this project through resolveRegistrarClient() /
+-- queryRegistrar(), which probe the registrar URL first.
 --
 -- Who writes these tables:
 --   src/app/api/admin/approve-student/route.ts
