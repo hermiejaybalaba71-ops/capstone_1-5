@@ -1,0 +1,276 @@
+
+Background of the Study
+Scholarships play an important role in higher education by providing financial assistance to deserving students, particularly those who experience financial difficulties. They help reduce educational expenses, encourage academic excellence, and give students opportunities to pursue and complete their studies.
+
+Digital management systems have also become important in higher education institutions because they improve service delivery, operational efficiency, and data-driven decision-making (World Bank, 2021). Through web-based platforms, administrative processes such as record keeping and information management can be performed more accurately and efficiently.
+
+In scholarship administration, institutions need an organized process for handling applications, verifying student eligibility, ranking applicants, and monitoring scholarship recipients. Previous studies have demonstrated how web-based systems improve data management and organization (Al-Ayyubi & Maulana, 2023; Ablen et al., 2025), while artificial intelligence and machine learning can support objective, criteria-based applicant ranking (Fajardo et al., 2024).
+
+However, St. Peter's College continues to rely on manual scholarship verification and monitoring, highlighting the need for an integrated system that supports online scholarship applications, applicant ranking, and continuous academic monitoring.
+
+
+PROBLEM STATEMENT
+  
+
+01. Inaccurate Beneficiary List
+
+The final list of beneficiaries could be inaccurate because some approved scholars may no longer be enrolled or attending classes.
+
+02. Changed Contact Numbers
+
+Approximately 10% of scholars had changed mobile numbers, resulting in delays in submitting missing requirements for CHED approval.
+
+03. Missed CHED Deadlines
+
+Manual collection of required documents and signatures caused difficulties and delays, resulting in missed deadlines imposed by CHED and other funding agencies.
+
+04. Delayed Manual Validation of 1,800 Scholarship Records
+
+Approximately 1,800 CHED-approved scholarship records for AY 2025–2026 were pending manual validation. The Scholarship Coordinator took approximately one week to validate one scholar's records.
+
+05. Lack of Automated Academic Monitoring
+
+The absence of an automatic academic monitoring system makes it difficult to identify scholars who may fail to meet the required academic retention standards.
+
+
+Slide 3 – OBJECTIVES OF THE STUDY
+General Objective
+
+To develop an Intelligent Scholarship Application, Ranking, and Early-Warning Monitoring System for St. Peter's College using the Random Forest Classifier for applicant ranking, early-warning monitoring for academic performance, and ISO/IEC 25010 for software quality evaluation.
+
+Specific Objectives
+
+1. Develop the Intelligent Scholarship Application, Ranking, and Early-Warning Monitoring System with the following modules:
+
+A. Student Module (React.js Frontend)
+- Registration and login/logout.
+- View available scholarship programs.
+- Online scholarship application and ITR/family annual income upload.
+- Profile management and supporting document/academic record uploads.
+- Real-time application tracking.
+- View notifications, announcements, and early-warning alerts.
+- Edit submitted applications before approval.
+B. Admin Module (Admin Interface and FastAPI/Flask Backend)
+- Admin login and security.
+- User management and faculty account creation.
+- Scholarship program development and configuration.
+- Scholarship application management, exporting, and processing.
+- Random Forest-based applicant ranking.
+- Validation of CHED-approved lists through the simulated Registrar Information System (RIS).
+- Notification management, report generation, and data exporting.
+- View and export supporting documents and academic records.
+- Import previous applications and approved lists; approve newly registered students not yet listed in the simulated RIS for verification before application.
+C. Faculty Module
+- Faculty login and authentication.
+- View early-warning alerts for scholars at risk.
+- Monitor scholars' academic performance.
+- Send intervention and academic support messages.
+- View finalized approved scholarship lists.
+D. CHED Personnel Module
+- CHED login and authentication.
+- Review scholarship applications submitted to the school.
+- View machine learning ranking results.
+- Review, approve, and select qualified scholarship beneficiaries.
+- Provide and return the final scholarship list.
+- Export application records and machine learning ranking results.
+E. Core System Functions
+- Data Validation and Eligibility Screening: Verify student identity, enrollment eligibility, academic records, and scholarship eligibility through the simulated RIS.
+- Machine Learning-Based Ranking: Rank applicants according to financial need using relevant factors and the Random Forest Classifier.
+- OCR-Based ITR Reading: Read uploaded ITR documents, verify applicant names, and extract annual family income for financial need assessment.
+- Early-Warning Monitoring: Identify scholars with grades below the required 93% maintaining grade and generate alerts for timely intervention.
+- Secure Data Management: Store student profiles, applications, supporting documents, academic records, ranking results, and alerts using Supabase with role-based access control.
+2. Conduct Software Quality Assessment using ISO/IEC 25010 from the perspectives of IT experts, scholarship administrators,Ched, faculty, and students in terms of:
+- Functional Suitability
+- Reliability
+- Usability
+- Performance Efficiency
+- Security
+
+
+
+SLIDE 3 – SCOPE
+SCOPE OF THE STUDY
+- Coverage: St. Peter's College, Iligan City, Academic Year 2025–2026.
+- Respondents: 25 participants (21 students, 1 administrator, 1 simulated CHED reviewer, 1 faculty member, and 1 IT expert).
+- ITR Processing: Simulated ITR documents based on BIR Form 1701-MS, including student and parent/guardian income information, processed through OCR.
+- Data Privacy: No actual private ITR documents or confidential BIR tax records were collected, in consideration of RA 10173.
+- Machine Learning: Random Forest Classifier trained using PSA FIES 2025 Public Use File (Region 10) to assess financial need and rank applicants.
+- System Features: Online application, simulated enrollment verification, document upload, eligibility screening, applicant ranking, notifications, announcements, academic monitoring, and report generation.
+- Evaluation: ISO/IEC 25010 – Functional Suitability, Reliability, Usability, Performance Efficiency, and Security.
+
+LIMITATIONS OF THE STUDY
+1. No digitized historical ITR or annual family income records available at St. Peter's College.
+2. No actual private ITR or confidential BIR tax records used.
+3. Web-browser access only; no native mobile application.
+4. No direct integration with CHED or external institutional databases.
+5. Uses only Random Forest Classifier.
+6. CHED review and approval process is simulated.
+7. Limited to St. Peter's College.
+8. No long-term measurement of student retention or graduation outcomes.
+9. Some procedures still require face-to-face transactions.
+10. Announcements are limited to schedules and requirements.
+11. Ranking and prioritization are decision-support functions only; final scholarship approval remains with authorized officials. 
+
+
+1.6 Significance of the Study
+The proposed Intelligent Scholarship Application, Ranking, and Early-Warning Monitoring System will enhance the efficiency, accuracy and transparency of scholarship administration at St. Peter's College. The study will be expected to have an impact on the following stakeholders as it integrates the processing of scholarship applications, validation of applicants, machine learning based ranking, academic monitoring and notification services into a single platform:
+Students
+Students will enjoy much easier access to information on scholarships, the ability to apply online, get scholarship status updates in real-time, and receive automatic emails whenever there are scholarship requirements or application results. Finally, the Early-Warning Monitoring will alert the student to academic problems that could impact whether or not they are eligible for a scholarship and can take appropriate action in a timely fashion to turn things around and enhance their chances for success.
+Scholarship Administrators
+Centralized applicant records, automated validation, and organized scholarship information will streamline and improve the efficiency of scholarship processing. The use of the Random Forest Classifier for applicant ranking will also accelerate the evaluation of applications, provide more consistent and objective evaluation, and reduce the manual workload.
+Faculty Members
+ Early-Warning Monitoring feature will help faculty to identify students who are at risk of losing a scholarship. This will allow faculty to offer timely academic guidance, counseling and intervention to help students fulfill scholarship requirements and enhance their academic abilities.
+St. Peter’s College
+The institution will enjoy better data management, workflow automation, and centralized data record keeping. The system can facilitate more effective communication between stakeholders, increase transparency in scholarship evaluation processes, and give stakeholders reliable information for monitoring the scholarship recipients and support institutional decision making.
+The Commission on Higher Education (CHED) Personnel
+CHED staff will have access to organized scholarship records, applicant information and ranking results. The machine learning ranking process can assist in the more systematic and objective evaluation of the scholarship applicants, according to the criteria of eligibility and their financial needs, that can help to enhance the scholarship evaluation process.
+Future Researchers
+The study can serve as a reference for scholars who wish to develop a scholarship management system, a system of academic early-warning monitoring, as well as machine learning applications for educational decision-making in the future. This study's results can offer useful information and be a foundation for continuing research for better managing scholarships and educational information systems.
+  
+
+
+SLIDE 4 – REVIEW OF RELATED LITERATURE AND STUDIES
+The study is supported by four major themes from previous research:
+
+1. Web-Based Scholarship Management Systems
+- Al-Ayyubi and Maulana (2023) – Improved scholarship application and data management.
+- Ablen et al. (2025) – Reduced administrative workload through automated scholarship applications.
+- Berido et al. (2023) – Supported systematic scholarship eligibility assessment.
+2. Early-Warning Systems and Academic Risk Prediction
+- Hu et al. (2014) – Identifying students at risk through academic performance analysis.
+- Plak et al. (2022) – Supporting early academic interventions.
+- Bañeres et al. (2023) – Improving student support through continuous monitoring.
+3. Machine Learning for Scholarship Ranking
+- Chaudhari et al. (2022) – Machine learning for scholarship applicant selection.
+- Fajardo et al. (2024) – Data-driven applicant evaluation.
+- Buslim et al. (2023) – More objective and consistent scholarship selection using ensemble learning.
+4. Software Quality Standards
+
+- ISO/IEC 25010 – Provides quality characteristics for evaluating software functionality, reliability, usability, performance efficiency, and security.
+SLIDE 5 – SYNTHESIS AND RESEARCH GAP
+Synthesis of Related Studies
+
+Previous studies demonstrate that:
+- Web-based systems improve scholarship application processing and record management.
+- Early-warning systems help identify students at risk of academic difficulties.
+- Machine learning supports systematic and objective applicant evaluation.
+- ISO/IEC 25010 provides a framework for software quality evaluation.
+Identified Research Gap
+
+Most existing studies focus on individual scholarship processes, such as online applications, applicant ranking, or academic monitoring, rather than integrating all these functions into one platform.
+
+Proposed Solution
+
+This study addresses the identified gap by developing an Intelligent Web-Based Scholarship Application, Ranking, and Early-Warning Monitoring System that integrates:
+1. Online Scholarship Application
+2. Automated Student Verification
+3. Random Forest-Based Applicant Ranking
+4. Early-Warning Academic Monitoring
+5. Centralized Scholarship Management
+Research gap addressed
+The proposed system integrates scholarship application, applicant ranking, and continuous academic monitoring into one centralized platform for St. Peter's College.
+
+
+Slide 4 – METHODOLOGY: SYSTEM DEVELOPMENT PHASES
+1. Planning Phase
+- Identified and analyzed the existing manual scholarship management process at St. Peter's College.
+- Identified operational problems and the absence of an automated scholar monitoring system.
+- Established project objectives, scope, functional and technical requirements.
+- Considered the requirements of students, faculty, and administrators.
+2. Analysis Phase
+- Identified functional and non-functional system requirements.
+- Examined the existing scholarship application workflow and its bottlenecks.
+- Analyzed student information, enrollment status, GPA, fee accounts, and application documents.
+- Established system validation criteria and eligibility rules.
+3. Design Phase
+- Designed the system using a Three-Tier Architecture:
+  - Presentation Layer
+  - Application Layer
+  - Data Layer
+- Designed the database, user interface, and system workflows.
+- Created IPO Model, Use Case Diagram, Context Diagram, Data Flow Diagram (DFD), and Entity Relationship Diagram (ERD).
+- Integrated Random Forest Classifier into the system design.
+- Designed responsive and user-friendly interfaces for students, staff, and administrators.
+
+Slide 5 – METHODOLOGY: IMPLEMENTATION PHASE
+4. Implementation Phase
+
+Developed and integrated the web-based application using the following technologies:
+- Frontend: React.js and Vite
+- Backend: Python using FastAPI or Flask
+- Database: Supabase (PostgreSQL)
+- Machine Learning: Random Forest Classifier using Scikit-learn
+- Data Processing: Pandas and NumPy
+- Model Deployment: Joblib
+Implemented System Modules:
+- Student Module
+- Admin Module
+- Faculty Module
+- CHED Personnel Module
+- Application Management
+- Applicant Ranking
+- Early-Warning Monitoring
+- Notifications and Report Generation
+Two-Dataset Architecture
+Dataset 1: PSA FIES 2025 – Region 10
+- Source: Philippine Statistics Authority (PSA), 2025.
+- Contains 10,006 household records.
+- 33 duplicate records were removed.
+- 9,973 cleaned records were used for model fitting.
+- Used to train the Random Forest Classifier in predicting financial-need priority.
+- Priority classification: PSA National Per Capita Income Deciles 1–4 (NPCINC ≤ 4).
+- Non-priority classification: Deciles 5–10.
+Dataset 2: Simulated Registrar Information System (RIS)
+- Contains anonymized historical St. Peter's College student records.
+- Used strictly for student identity and enrollment validation.
+- Used to verify student enrollment and academic information.
+
+Slide 6 – IMPLEMENTATION: RANDOM FOREST MODEL TRAINING
+Random Forest Classifier Training Process
+- Input Variable: Total Annual Family Income (TOINC).
+- Target Variable: Priority Eligibility (NPCINC ≤ 4).
+- Preprocessing: Removed 33 duplicate records using Pandas and NumPy.
+- Total Cleaned Records: 9,973 households.
+Dataset Distribution
+Train-Test Split (80:20)
+
+
+
+
+Training Set
+
+7,978
+80% of records
+
+
+Testing Set
+
+1,995
+20% of records
+
+
+
+Model Evaluation
+
+The trained model was evaluated using unseen testing data through the following metrics:
+1. Accuracy
+2. Precision
+3. Recall
+4. F1-Score
+5. Confusion Matrix
+The model was fitted using the training dataset and evaluated using the held-out testing dataset to assess its classification performance.
+
+Slide 7 – IMPLEMENTATION: OCR AND AUTOMATED RANKING
+OCR-Based ITR Reading
+- Reads the uploaded Income Tax Return (ITR) image.
+- Extracts the applicant's name and annual family income.
+- Verifies the name printed on the ITR against the applicant's registered name.
+- Confirms the extracted annual_income_family before processing the applicant's financial-need ranking.
+Random Forest-Based Applicant Ranking
+- Uses the verified annual family income as input.
+- Processes the applicant's financial information using the pre-trained Random Forest Classifier.
+- Predicts whether the applicant belongs to the priority or non-priority category.
+- Generates financial-need-based applicant ranking.
+Overall Process:
+
+ITR Upload → OCR Reading → Name Verification → Annual Income Extraction → Random Forest Prediction → Applicant Priority Ranking

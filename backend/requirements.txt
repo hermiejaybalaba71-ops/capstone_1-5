@@ -1,0 +1,38 @@
+# ISEWM Scholarship System - OCR + Random Forest ranking pipeline
+# Local: Python 3.14.3 (C:\Program Files\Python314\python.exe)
+# Vercel ml service: Python 3.12 (linux) - ONNX Runtime uses CPU there.
+#
+#   py -3 -m pip install -r ml\requirements.txt
+#
+# Install onnxruntime-directml LAST on Windows: it replaces the stock
+# ONNX Runtime so RapidOCR uses the GPU (DmlExecutionProvider). Vercel uses
+# the Linux onnxruntime package and RapidOCR on CPU.
+
+numpy==2.5.3 ; sys_platform == "win32"
+numpy>=1.26,<3 ; sys_platform != "win32"
+pillow==12.3.0 ; sys_platform == "win32"
+pillow>=10 ; sys_platform != "win32"
+scikit-learn==1.9.1 ; sys_platform == "win32"
+scikit-learn>=1.4 ; sys_platform != "win32"
+joblib==1.6.0
+opencv-python==5.0.0.93 ; sys_platform == "win32"
+opencv-python==4.10.0.84 ; sys_platform != "win32"
+rapidocr-onnxruntime==1.2.3
+onnxruntime-directml==1.24.4 ; sys_platform == "win32"
+onnxruntime>=1.20 ; sys_platform != "win32"
+pyclipper>=1.2.1 ; sys_platform != "win32"
+shapely>=1.7.1 ; sys_platform != "win32"
+PyYAML ; sys_platform != "win32"
+six>=1.15.0 ; sys_platform != "win32"
+
+# HTTP service entrypoint (ml/service.py) - Vercel Python runtime
+fastapi>=0.115
+
+# ASGI server for the Docker image (`uvicorn app.main:app`). Vercel's Python
+# runtime serves the ASGI app itself, but Render needs an explicit server -
+# fastapi does NOT pull uvicorn in, so without this the container crashes on
+# start with "No module named uvicorn".
+uvicorn>=0.24
+
+# Excel training-data support (ml/training_data.xlsx)
+openpyxl>=3.1
