@@ -27,6 +27,32 @@ export function getRegistrarFallback(): SupabaseClient | null {
 }
 
 /**
+ * Resolve a client that is actually reachable.
+ *
+ * The dedicated registrar project is tried first; when it is unreachable
+ * (deleted project, DNS failure, expired credentials) the main project is
+ * returned instead, where the same registrar_* tables live.
+ *
+ * Sequential write flows (approve -> enrollment -> subjects) need one client
+ * for several statements, so they use this instead of queryRegistrar(), which
+ * resolves per call.
+ */
+export async function resolveRegistrarClient(): Promise<SupabaseClient> {
+  const primary = getRegistrarSupabase();
+  // No separate registrar project configured (or it points at the main one).
+  if (!registrarUrl || registrarUrl === mainUrl) return primary;
+  try {
+    // Probe: a DNS/network failure raises, a missing table or RLS block
+    // returns { error } - both mean "use the fallback".
+    const { error } = await primary.from("registrar_students").select("student_id").limit(1);
+    if (!error) return primary;
+  } catch {
+    // network / DNS failure — fall through
+  }
+  return getRegistrarFallback() ?? primary;
+}
+
+/**
  * Run a registrar query against the dedicated registrar project first,
  * then automatically fall back to the main project (where registrar_* tables
  * can also be installed) when the registrar project is unreachable.

@@ -68,6 +68,8 @@ eng.traineddata
 
 # local working files / DB dumps & notes (may contain test credentials)
 *.sql
+# ...except the schema/policy files the app needs documented (no secrets in them)
+!db/*.sql
 *.docx
 *.xlsx
 csv in applications schoalrships.txt

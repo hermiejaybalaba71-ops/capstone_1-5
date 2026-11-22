@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 import { createClient } from "@supabase/supabase-js";
-import { createRegistrarClient } from "@/lib/supabase/registrar";
+import { resolveRegistrarClient } from "@/lib/supabase/registrar";
 
 export const runtime = "nodejs";
 
@@ -95,7 +95,7 @@ export async function POST(req: Request) {
       });
     }
 
-    const registrar = createRegistrarClient();
+    const registrar = await resolveRegistrarClient();
     let alertsCreated = 0;
     let studentsNotified = 0;
     let scanned = 0;

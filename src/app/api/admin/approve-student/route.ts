@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 import { createClient } from "@supabase/supabase-js";
-import { createRegistrarClient } from "@/lib/supabase/registrar";
+import { resolveRegistrarClient } from "@/lib/supabase/registrar";
 
 export const runtime = "nodejs";
 
@@ -240,7 +240,11 @@ export async function POST(req: Request) {
       .join(", ");
 
     /* ---- 2. Simulated registrar record ---- */
-    const registrar = createRegistrarClient();
+    // resolveRegistrarClient() probes the dedicated registrar project and
+    // falls back to the main project when it is unreachable, so approval
+    // (and the enrollment/subjects/grades writes below) never dies on a
+    // dead registrar URL.
+    const registrar = await resolveRegistrarClient();
     const { data: existing, error: lookErr } = await registrar
       .from("registrar_students")
       .select("student_id, registration_status")
