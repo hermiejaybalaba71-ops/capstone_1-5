@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
 import { createClient } from "@supabase/supabase-js";
+import { resolveRegistrarClient } from "@/lib/supabase/registrar";
 
 export const runtime = "nodejs";
 
@@ -90,11 +91,12 @@ export async function POST(req: Request) {
 
     const { data: student } = await sb
       .from("student_accounts")
-      .select("student_id")
+      .select("student_id, student_number")
       .eq("user_id", userId)
       .maybeSingle();
 
     const studentId = student?.student_id as number | undefined;
+    const studentNumber = (student?.student_number || "").trim();
 
     // Best-effort cleanup of related rows (ignore missing tables / FK edge cases).
     const tryDelete = async (fn: () => PromiseLike<unknown>) => {
@@ -120,6 +122,30 @@ export async function POST(req: Request) {
       await tryDelete(() => sb.from("notifications_announcements").delete().eq("student_id", studentId));
       await tryDelete(() => sb.from("early_warning_alerts").delete().eq("student_id", studentId));
       await tryDelete(() => sb.from("student_accounts").delete().eq("user_id", userId));
+
+      /* Remove the SIMULATED registrar record too, so no orphaned
+         enrollment/grades rows are left behind. Without this, re-registering
+         the same student number would auto-verify against a stale registrar
+         row and bypass admin approval. registrar_enrollment and
+         registrar_student_subjects cascade from registrar_students. */
+      if (studentNumber) {
+        try {
+          const registrar = await resolveRegistrarClient();
+          const { data: regRow } = await registrar
+            .from("registrar_students")
+            .select("student_id")
+            .eq("student_number", studentNumber)
+            .maybeSingle();
+          if (regRow?.student_id != null) {
+            await registrar
+              .from("registrar_students")
+              .delete()
+              .eq("student_id", regRow.student_id);
+          }
+        } catch {
+          // Simulated registrar cleanup is best-effort — never blocks deletion.
+        }
+      }
     }
 
     const { error: delUserErr } = await sb.from("users").delete().eq("user_id", userId);
