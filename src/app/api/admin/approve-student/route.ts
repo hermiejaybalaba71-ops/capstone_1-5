@@ -361,6 +361,37 @@ export async function POST(req: Request) {
 
     const { gpa, percentage } = computeGpa(subjects);
 
+    /* ---- 4b. Persist the OVERALL GPA row ------------------------------
+       registrar_student_gpa holds one rolled-up row per student (all
+       subjects combined). The faculty early-warning scan reads THIS table,
+       so the 93% alert is based on the overall GPA rather than on any
+       single subject. Upsert keyed on student_id so re-approving refreshes
+       the same row instead of duplicating it. ------------------------ */
+    const overallUnits = subjects.reduce((a, s) => a + Number(s.units || 0), 0);
+    const overallPoints = subjects.reduce(
+      (a, s) => a + Number(s.grade || 0) * Number(s.units || 0),
+      0
+    );
+    await registrar.from("registrar_student_gpa").upsert(
+      {
+        student_id: registrarStudentId,
+        academic_year: term.academic_year,
+        semester: term.semester,
+        total_subjects: subjects.length,
+        total_units: Math.round(overallUnits * 100) / 100,
+        weighted_points: Math.round(overallPoints * 100) / 100,
+        gpa,
+        percentage,
+        at_risk: percentage < MAINTAINING_GRADE_PCT,
+        maintained: percentage >= MAINTAINING_GRADE_PCT,
+        computed_at: new Date().toISOString(),
+        updated_at: new Date().toISOString(),
+      },
+      { onConflict: "student_id" }
+    );
+    // Best-effort: a GPA-row hiccup must never abort an approval that has
+    // already written the student, enrollment and subjects.
+
     /* ---- 5. Mark the account Verified (main database) ---- */
     const { error: verifyErr } = await sb
       .from("student_accounts")

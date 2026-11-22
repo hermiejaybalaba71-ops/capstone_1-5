@@ -110,28 +110,24 @@ export async function POST(req: Request) {
         .maybeSingle();
       if (!regStudent) continue;
 
-      const { data: subjects } = await registrar
-        .from("registrar_student_subjects")
-        .select("grade, units")
-        .eq("student_id", regStudent.student_id);
-      if (!subjects?.length) continue;
+      // The 93% early-warning is based on the OVERALL GPA row - every
+      // subject of the student rolled into one figure - rather than on any
+      // single subject. registrar_student_gpa is written by the admin
+      // approve flow and backfilled for pre-existing records.
+      const { data: overall } = await registrar
+        .from("registrar_student_gpa")
+        .select("gpa, percentage, total_units")
+        .eq("student_id", regStudent.student_id)
+        .maybeSingle();
+      if (!overall) continue;
 
-      let totalUnits = 0;
-      let totalWeighted = 0;
-      let validGrades = 0;
-      for (const s of subjects) {
-        const grade = Number(s.grade);
-        if (s.grade == null || Number.isNaN(grade)) continue;
-        const units = Number(s.units) || 3;
-        totalWeighted += grade * units;
-        totalUnits += units;
-        validGrades++;
-      }
-      if (totalUnits === 0 || validGrades === 0) continue;
+      const totalUnits = Number(overall.total_units) || 0;
+      if (totalUnits <= 0) continue;
 
       scanned++;
-      const avgGrade = totalWeighted / totalUnits;
-      const percentage = ((5 - avgGrade) / 4) * 100;
+      const avgGrade = Number(overall.gpa);
+      const percentage = Number(overall.percentage);
+      if (!Number.isFinite(percentage)) continue;
       if (percentage >= MAINTAINING_GRADE_PCT) continue;
 
       const riskLevel = percentage < 80 ? "High" : percentage < 90 ? "Medium" : "Low";
